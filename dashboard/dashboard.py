@@ -234,41 +234,5 @@ ax6.set_ylabel('Bulan', fontsize=10)
 ax6.tick_params(axis='x', rotation=45, labelsize=8)
 fig6.tight_layout(); st.pyplot(fig6); plt.close()
 
-# # ── AQI DISTRIBUTION ─────────────────────────────────────────────────────────
-# st.markdown("---")
-# col_e, col_f = st.columns(2)
-# with col_e:
-#     st.markdown("**Distribusi Kategori AQI**")
-#     aqi_order  = ['Good','Moderate','Unhealthy (Sensitive)','Unhealthy','Very Unhealthy','Hazardous']
-#     aqi_colors = ['#2ecc71','#f1c40f','#e67e22','#e74c3c','#9b59b6','#8e44ad']
-#     aqi_counts = dff['AQI_Category'].value_counts().reindex(aqi_order, fill_value=0)
-
-#     mask_aqi   = aqi_counts.values > 0
-#     counts_fil = aqi_counts.values[mask_aqi]
-#     labels_fil = [f'{aqi_order[i]}\n({aqi_counts.values[i]:,})' for i in range(len(aqi_order)) if mask_aqi[i]]
-#     colors_fil = [aqi_colors[i] for i in range(len(aqi_order)) if mask_aqi[i]]
-
-#     fig7, ax7 = plt.subplots(figsize=(5, 4))
-#     ax7.pie(counts_fil, labels=labels_fil, colors=colors_fil,
-#             autopct=lambda p: f'{p:.1f}%' if p > 3 else '',
-#             startangle=90, pctdistance=0.75, textprops={'fontsize': 7})
-#     ax7.set_title('Distribusi Kategori AQI', fontsize=11, fontweight='bold')
-#     fig7.tight_layout(); st.pyplot(fig7); plt.close()
-
-# with col_f:
-#     st.markdown("**% Waktu Kondisi Berbahaya per Stasiun**")
-#     danger_pct = (
-#         dff[dff['PM2.5'] > 150.4].groupby('station').size() /
-#         dff.groupby('station').size() * 100
-#     ).fillna(0).sort_values(ascending=True)
-#     fig8, ax8 = plt.subplots(figsize=(6, 4))
-#     colors_d = ['#e74c3c' if v > 20 else '#e67e22' if v > 10 else '#f1c40f' for v in danger_pct.values]
-#     ax8.barh(danger_pct.index, danger_pct.values, color=colors_d, edgecolor='white', height=0.6)
-#     for i, val in enumerate(danger_pct.values):
-#         ax8.text(val + 0.2, i, f'{val:.1f}%', va='center', fontsize=8)
-#     ax8.set_xlabel('% Waktu Berbahaya (PM2.5 > 150 µg/m³)', fontsize=9)
-#     ax8.spines[['top','right']].set_visible(False)
-#     fig8.tight_layout(); st.pyplot(fig8); plt.close()
-
 st.markdown("---")
 st.caption("Dashboard dibuat menggunakan Streamlit | Data: PRSA Air Quality Dataset Beijing 2013–2017")
