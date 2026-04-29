@@ -241,7 +241,17 @@ with col_e:
     st.markdown("**Distribusi Kategori AQI**")
     aqi_order  = ['Good','Moderate','Unhealthy (Sensitive)','Unhealthy','Very Unhealthy','Hazardous']
     aqi_colors = ['#2ecc71','#f1c40f','#e67e22','#e74c3c','#9b59b6','#8e44ad']
-    aqi_counts
+    aqi_counts = dff['AQI_Category'].value_counts().reindex(aqi_order, fill_value=0)
+
+    mask_aqi   = aqi_counts.values > 0
+    counts_fil = aqi_counts.values[mask_aqi]
+    labels_fil = [f'{aqi_order[i]}\n({aqi_counts.values[i]:,})' for i in range(len(aqi_order)) if mask_aqi[i]]
+    colors_fil = [aqi_colors[i] for i in range(len(aqi_order)) if mask_aqi[i]]
+
+    fig7, ax7 = plt.subplots(figsize=(5, 4))
+    ax7.pie(counts_fil, labels=labels_fil, colors=colors_fil,
+            autopct=lambda p: f'{p:.1f}%' if p > 3 else '',
+            startangle=90, pctdistance=0.75, textprops={'fontsize': 7})
     ax7.set_title('Distribusi Kategori AQI', fontsize=11, fontweight='bold')
     fig7.tight_layout(); st.pyplot(fig7); plt.close()
 
