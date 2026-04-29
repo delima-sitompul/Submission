@@ -255,20 +255,20 @@ fig6.tight_layout(); st.pyplot(fig6); plt.close()
 #     ax7.set_title('Distribusi Kategori AQI', fontsize=11, fontweight='bold')
 #     fig7.tight_layout(); st.pyplot(fig7); plt.close()
 
-with col_f:
-    st.markdown("**% Waktu Kondisi Berbahaya per Stasiun**")
-    danger_pct = (
-        dff[dff['PM2.5'] > 150.4].groupby('station').size() /
-        dff.groupby('station').size() * 100
-    ).fillna(0).sort_values(ascending=True)
-    fig8, ax8 = plt.subplots(figsize=(6, 4))
-    colors_d = ['#e74c3c' if v > 20 else '#e67e22' if v > 10 else '#f1c40f' for v in danger_pct.values]
-    ax8.barh(danger_pct.index, danger_pct.values, color=colors_d, edgecolor='white', height=0.6)
-    for i, val in enumerate(danger_pct.values):
-        ax8.text(val + 0.2, i, f'{val:.1f}%', va='center', fontsize=8)
-    ax8.set_xlabel('% Waktu Berbahaya (PM2.5 > 150 µg/m³)', fontsize=9)
-    ax8.spines[['top','right']].set_visible(False)
-    fig8.tight_layout(); st.pyplot(fig8); plt.close()
+# with col_f:
+#     st.markdown("**% Waktu Kondisi Berbahaya per Stasiun**")
+#     danger_pct = (
+#         dff[dff['PM2.5'] > 150.4].groupby('station').size() /
+#         dff.groupby('station').size() * 100
+#     ).fillna(0).sort_values(ascending=True)
+#     fig8, ax8 = plt.subplots(figsize=(6, 4))
+#     colors_d = ['#e74c3c' if v > 20 else '#e67e22' if v > 10 else '#f1c40f' for v in danger_pct.values]
+#     ax8.barh(danger_pct.index, danger_pct.values, color=colors_d, edgecolor='white', height=0.6)
+#     for i, val in enumerate(danger_pct.values):
+#         ax8.text(val + 0.2, i, f'{val:.1f}%', va='center', fontsize=8)
+#     ax8.set_xlabel('% Waktu Berbahaya (PM2.5 > 150 µg/m³)', fontsize=9)
+#     ax8.spines[['top','right']].set_visible(False)
+#     fig8.tight_layout(); st.pyplot(fig8); plt.close()
 
 st.markdown("---")
 st.caption("Dashboard dibuat menggunakan Streamlit | Data: PRSA Air Quality Dataset Beijing 2013–2017")
