@@ -188,15 +188,21 @@ with col_b:
     aqi_counts = dff['AQI_Category'].value_counts().reindex(aqi_order, fill_value=0)
 
     fig2, ax2 = plt.subplots(figsize=(5, 4))
-    wedges, texts, autotexts = ax2.pie(
-        aqi_counts.values,
-        labels=[f'{l}\n({v:,})' for l, v in zip(aqi_order, aqi_counts.values)],
-        colors=aqi_colors,
-        autopct=lambda p: f'{p:.1f}%' if p > 3 else '',
-        startangle=90,
-        pctdistance=0.75,
-        textprops={'fontsize': 7}
-    )
+    valid_counts = aqi_counts[aqi_counts > 0]
+    
+    if valid_counts.empty:
+        ax2.text(0.5, 0.5, 'No Data',
+                 ha='center', va='center', fontsize=10)
+    else:
+        wedges, texts, autotexts = ax2.pie(
+            valid_counts.values,
+            labels=[f'{l}\n({v:,})' for l, v in zip(valid_counts.index, valid_counts.values)],
+            colors=aqi_colors[:len(valid_counts)],
+            autopct=lambda p: f'{p:.1f}%' if p > 3 else '',
+            startangle=90,
+            pctdistance=0.75,
+            textprops={'fontsize': 7}
+        )
     ax2.set_title('Distribusi Kategori AQI', fontsize=11, fontweight='bold')
     fig2.tight_layout()
     st.pyplot(fig2)
